@@ -644,7 +644,49 @@ public class External extends Eventor<Event> {
 		
 		return action_id;
 	}
+	
+	/**
+	 * Requests list of all paths.
+	 * 
+	 * @return action id
+	 */
+	public String getPaths() {
+		return getPaths(false);
+	}
+	/**
+	 * Requests list of all paths.
+	 * 
+	 * @param wait wait for request to finish
+	 * @return action id
+	 */
+	public String getPaths(boolean wait) {
+		return getPaths(wait, Long.toString(this.actionCounter++));
+	}
+	
+	/**
+	 * Requests list of all paths.
+	 * 
+	 * @param wait wait for request to finish
+	 * @param action_id user specified action id
+	 * @return action id
+	 */
+	public String getPaths(boolean wait, String action_id) {
+		Map<String, String> params = new HashMap<>();
+		params.put("action_id", action_id);
 		
+		Thread request = request(createUrl("get_paths", params));
+
+		if (wait) {
+			try {
+				request.join();
+			} catch (InterruptedException ex) {
+				Logger.getLogger(External.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+		
+		return action_id;
+	}
+	
 	/**
 	 * Requests deletion of specified files.
 	 * 
@@ -703,7 +745,7 @@ public class External extends Eventor<Event> {
 		try {
 			request(
 					String.format(
-							"action=updateFile&action_id=%s&id=%s&path=%s",
+							"action=set_file&action_id=%s&id=%s&path=%s",
 							URLEncoder.encode(action_id, "UTF-8"),
 							Integer.toString(file.getId()),
 							URLEncoder.encode(path, "UTF-8")
