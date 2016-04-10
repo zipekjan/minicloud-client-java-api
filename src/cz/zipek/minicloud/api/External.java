@@ -1,6 +1,3 @@
-/**
- * Package containing everything needed to interact with minicloud API.
- */
 package cz.zipek.minicloud.api;
 
 import cz.zipek.minicloud.api.events.BoolEvent;
