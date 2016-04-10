@@ -148,7 +148,7 @@ public class External extends Eventor<Event> {
 	}
 	
 	private byte[] toBytes(char[] chars) {
-		CharBuffer charBuffer = CharBuffer.wrap(chars);
+		CharBuffer charBuffer = CharBuffer.wrap(Arrays.copyOf(chars, chars.length));
 		ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(charBuffer);
 		byte[] bytes = Arrays.copyOfRange(byteBuffer.array(),
 				byteBuffer.position(), byteBuffer.limit());

@@ -109,7 +109,7 @@ class DownloadThread extends Thread
 						}
 
 						buffer = new byte[4096];
-						total = httpConn.getContentLengthLong();
+						total = Long.parseLong(httpConn.getHeaderField("Content-Length"));
 						downloaded = 0;
 
 						while ((bytesRead = inputStream.read(buffer)) != -1 && !stopDownload) {

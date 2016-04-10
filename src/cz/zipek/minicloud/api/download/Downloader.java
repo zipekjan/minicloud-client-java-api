@@ -15,7 +15,6 @@ import cz.zipek.minicloud.api.download.events.DownloadAllDoneEvent;
 import cz.zipek.minicloud.api.download.events.DownloadFileDoneEvent;
 import cz.zipek.minicloud.api.download.events.DownloadFileStartedEvent;
 import java.io.OutputStream;
-import java.nio.file.FileSystems;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -81,7 +80,7 @@ public class Downloader extends Eventor<DownloadEvent> implements Listener {
 		String target = file.getTarget();
 		if (target == null) {
 			file.setTarget(targetFolder
-				+ FileSystems.getDefault().getSeparator()
+				+ java.io.File.separator
 				+ file.getFile().getName()
 			);
 		}
