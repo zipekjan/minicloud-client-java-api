@@ -753,7 +753,7 @@ public class External extends Eventor<Event> {
 		}
 		return action_id;
 	}
-	
+
 	/**
 	 * Requests applying of local changes to server.
 	 * 
@@ -779,6 +779,99 @@ public class External extends Eventor<Event> {
 		params.put("id", Integer.toString(file.getId()));
 
 		request(createUrl("set_file", params));
+		
+		return action_id;
+	}
+	
+		
+	/**
+	 * Requests moving of specified file to specified path.
+	 * 
+	 * 
+	 * @param path
+	 * @param result
+	 * @return action id
+	 */
+	public String movePath(Path path, String result) {
+		return movePath(path, result, Long.toString(actionCounter++));
+	}
+	
+	/**
+	 * Requests moving of specified file to specified path.
+	 * 
+	 * @param path
+	 * @param result
+	 * @param action_id user specified action id
+	 * @return action id
+	 */
+	public String movePath(Path path, String result, String action_id) {
+		Map<String, String> params = new HashMap<>();
+		params.put("action_id", action_id);
+		params.put("id", Integer.toString(path.getId()));
+		params.put("path", result + "/" + path.getName());
+		params.put("parent", result);
+		
+		request(createUrl("set_path", params));
+		
+		return action_id;
+	}
+	
+		
+	/**
+	 * Requests moving of specified file to specified path.
+	 * 
+	 * 
+	 * @param path
+	 * @return action id
+	 */
+	public String deletePath(Path path) {
+		return deletePath(path, Long.toString(actionCounter++));
+	}
+	
+	/**
+	 * Requests moving of specified file to specified path.
+	 * 
+	 * @param path
+	 * @param action_id user specified action id
+	 * @return action id
+	 */
+	public String deletePath(Path path, String action_id) {
+		Map<String, String> params = new HashMap<>();
+		params.put("action_id", action_id);
+		params.put("id", Integer.toString(path.getId()));
+		
+		request(createUrl("delete_path", params));
+		
+		return action_id;
+	}
+	
+	/**
+	 * Requests deletion of specified paths.
+	 * 
+	 * @param paths paths to delete
+	 * @return action id
+	 */
+	public String deletePaths(List<Path> paths) {
+		return deletePaths(paths, Long.toString(this.actionCounter++));
+	}
+	
+	/**
+	 * Requests deletion of specified paths.
+	 * 
+	 * @param paths paths to delete
+	 * @param action_id user specified action id
+	 * @return action id
+	 */
+	public String deletePaths(List<Path> paths, String action_id) {
+		Map<String, String> params = new HashMap<>();
+		params.put("action_id", action_id);
+		
+		int index = 0;
+		for(Path path : paths) {
+			params.put("paths[" + Integer.toString(index++) + "]", Integer.toString(path.getId()));
+		}
+		
+		request(createUrl("delete_paths", params));
 		
 		return action_id;
 	}

@@ -216,7 +216,7 @@ public class User {
 
 		// Encrypt user key using password
 		if (encrypted) {
-			return getKeyEncryptor().encrypt(key);
+			return getKeyEncryptor().encrypt(Arrays.copyOf(key, key.length));
 		}
 		
 		return key;

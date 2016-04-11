@@ -36,5 +36,5 @@ public class UserEvent extends SuccessEvent {
 	public User getUser() {
 		return user;
 	}
-	
+
 }
