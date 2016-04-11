@@ -26,6 +26,7 @@ public class UploadItem {
 	
 	private String target;
 	private boolean isPublic;
+	private boolean createVersion;
 	private String filename;
 	private long size;
 	
@@ -58,6 +59,10 @@ public class UploadItem {
 	}
 	
 	public UploadItem(java.io.File file, File existing, boolean isPublic) {
+		this(file, existing, isPublic, true);
+	}
+	
+	public UploadItem(java.io.File file, File existing, boolean isPublic, boolean createVersion) {
 		this.file = file;
 		this.existing = existing;
 		this.target = null;
@@ -67,6 +72,7 @@ public class UploadItem {
 		this.size = file.length();
 		
 		this.isPublic = isPublic;
+		this.createVersion = createVersion;
 	}
 	
 	public UploadItem(InputStream stream, File existing) {
@@ -77,7 +83,15 @@ public class UploadItem {
 		this(stream, existing.getName(), existing.getSize(), existing, isPublic);
 	}
 	
+	public UploadItem(InputStream stream, File existing, boolean isPublic, boolean createVersion) {
+		this(stream, existing.getName(), existing.getSize(), existing, isPublic, createVersion);
+	}
+	
 	public UploadItem(InputStream stream, String filename, long size, File existing, boolean isPublic) {
+		this(stream, filename, size, existing, isPublic, true);
+	}
+	
+	public UploadItem(InputStream stream, String filename, long size, File existing, boolean isPublic, boolean createVersion) {
 		this.file = null;
 		this.existing = existing;
 		this.target = null;
@@ -86,6 +100,7 @@ public class UploadItem {
 		this.filename = filename;
 		this.size = size;
 		this.isPublic = isPublic;
+		this.createVersion = createVersion;
 	}
 
 	/**
@@ -135,6 +150,10 @@ public class UploadItem {
 	
 	public boolean isPublic() {
 		return isPublic;
+	}
+	
+	public boolean shouldCreateVersion() {
+		return createVersion;
 	}
 
 	public void setTarget(String targetFolder) {

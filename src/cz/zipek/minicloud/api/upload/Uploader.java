@@ -67,6 +67,10 @@ public class Uploader extends Eventor<UploadEvent> implements Listener {
 		add(new UploadItem(local, remote, isPublic));
 	}
 	
+	public void add(InputStream local, File remote, boolean isPublic, boolean createVersion) {
+		add(new UploadItem(local, remote, isPublic, createVersion));
+	}
+	
 	public void add(UploadItem item) {
 		items.add(item);
 	}

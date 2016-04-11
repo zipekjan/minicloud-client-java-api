@@ -98,6 +98,11 @@ public class UploadThread extends Thread implements Listener {
 			// Add public param
 			sender.addFormField("public[file]", Boolean.toString(item.isPublic()));
 			
+			// Add version param (only needed when forbidden)
+			if (!item.shouldCreateVersion()) {
+				sender.addFormField("version[file]", "0");
+			}
+			
 			// Add file
 			sender.addFilePart("file", item.getFilename(), item.getStream(), item.getSize());
 			
