@@ -75,7 +75,23 @@ public class Path {
 		}
 		
 	}
-
+	
+	/**
+	 * Loads list of all files including child folders.
+	 * 
+	 * @return 
+	 */
+	public List<File> getAllFiles() {
+		List<File> items = new ArrayList<>();
+		items.addAll(files);
+		
+		for(Path child : paths) {
+			items.addAll(child.getAllFiles());
+		}
+		
+		return items;
+	}
+	
 	/**
 	 * @return the source
 	 */

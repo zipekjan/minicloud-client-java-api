@@ -559,22 +559,22 @@ public class External extends Eventor<Event> {
 	 * Requests path info.
 	 * 
 	 * @param path queried path
-	 * @param wait wait for request to finish
+	 * @param recursive
 	 * @return action id
 	 */
-	public String getPath(String path, boolean wait) {
-		return getPath(path, wait, Long.toString(this.actionCounter++));
+	public String getPath(String path, boolean recursive) {
+		return getPath(path, recursive, Long.toString(this.actionCounter++));
 	}
 	
 	/**
 	 * Requests path info.
 	 * 
 	 * @param path queried path
-	 * @param wait wait for request to finish
+	 * @param recursive
 	 * @param action_id user specified action id
 	 * @return action id
 	 */
-	public String getPath(String path, boolean wait, String action_id) {
+	public String getPath(String path, boolean recursive, String action_id) {
 		Map<String, String> params = new HashMap<>();
 		params.put("action_id", action_id);
 		
@@ -582,16 +582,12 @@ public class External extends Eventor<Event> {
 			params.put("path", path);
 		}
 		
-		Thread request = request(createUrl("get_path", params));
-
-		if (wait) {
-			try {
-				request.join();
-			} catch (InterruptedException ex) {
-				Logger.getLogger(External.class.getName()).log(Level.SEVERE, null, ex);
-			}
+		if (recursive) {
+			params.put("recursive", "1");
 		}
 		
+		request(createUrl("get_path", params));
+
 		return action_id;
 	}
 	

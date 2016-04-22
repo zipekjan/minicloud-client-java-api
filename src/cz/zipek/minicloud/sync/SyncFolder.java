@@ -174,8 +174,8 @@ public class SyncFolder extends Eventor<SyncEvent> implements Listener {
 			external.addListener(this);
 		}
 		
-		//Request file list
-		actionId = external.getPath();
+		// Request file list
+		actionId = external.getPath(remote, true);
 	}
 
 	public void stop() {
@@ -258,8 +258,7 @@ public class SyncFolder extends Eventor<SyncEvent> implements Listener {
 					List<cz.zipek.minicloud.api.File> files = new ArrayList<>();
 					
 					if (folder != null) {
-						//@TODO: Use getAllFiles!
-						files = folder.getFiles();
+						files = folder.getAllFiles();
 						
 						//Download new files, sync changed
 						for(cz.zipek.minicloud.api.File file : files) {
