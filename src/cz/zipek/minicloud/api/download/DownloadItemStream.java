@@ -4,7 +4,8 @@ import cz.zipek.minicloud.api.FileVersion;
 import java.io.OutputStream;
 
 /**
- *
+ * Allows downloading file to stream rather than directly to file.
+ * 
  * @author Kamen
  */
 public class DownloadItemStream extends DownloadItem {

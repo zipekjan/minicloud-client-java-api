@@ -8,11 +8,26 @@ import org.json.JSONObject;
  * @author Kamen
  */
 public class Event {
+
+	/**
+	 * API instance that sent this event.
+	 */
 	protected final External sender;
+	
+	/**
+	 * Raw data of event.
+	 */
 	protected final JSONObject data;
 
 	private String actionId = null;
 
+	/**
+	 * Creates new event.
+	 * 
+	 * @param sender API instance that sent this event.
+	 * @param data Raw event data.
+	 * @param action_id Event action id used to identify responses to requests.
+	 */
 	public Event(External sender, JSONObject data, String action_id) {
 		this.sender = sender;
 		this.data = data;

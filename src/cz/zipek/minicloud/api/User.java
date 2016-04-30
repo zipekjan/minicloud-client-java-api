@@ -28,14 +28,23 @@ import org.json.JSONObject;
  */
 public class User {
 	
+	/**
+	 * Origin of user data.
+	 */
 	protected External source;
 	
+	/**
+	 * Unique identifier of user.
+	 */
 	protected int id;
 	
 	protected String name;
 	protected String email;
 	protected char[] password;
 	
+	/**
+	 * Key in raw form.
+	 */
 	protected byte[] key;
 	private String keyEncryption;
 	
@@ -138,10 +147,24 @@ public class User {
 		return Arrays.copyOf(password, password.length);
 	}
 	
+	/**
+	 * Changes user name. This change is only local,
+	 * setUser needs to be called to save changes to
+	 * server.
+	 * 
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	
+	/**
+	 * Sets admin attribute. This change is only local,
+	 * adminSetUser needs to be called to save changes to
+	 * server.
+	 * 
+	 * @param admin
+	 */
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}

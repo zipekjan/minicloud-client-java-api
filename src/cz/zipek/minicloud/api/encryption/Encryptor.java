@@ -34,10 +34,25 @@ public class Encryptor {
 
 	private IvParameterSpec iv;
 	
+	/**
+	 * Create encryptor using default options.
+	 * 
+	 * @param key key for encryption
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws NoSuchProviderException 
+	 */
 	public Encryptor(byte[] key) throws NoSuchAlgorithmException, NoSuchPaddingException, NoSuchProviderException {
 		this(key, "AES/CBC/PKCS5Padding");
 	}
 	
+	/**
+	 * @param rawKey key for encryption
+	 * @param aConfig encryption config, JCA compatible
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws NoSuchProviderException 
+	 */
 	public Encryptor(byte[] rawKey, String aConfig) throws NoSuchAlgorithmException, NoSuchPaddingException, NoSuchProviderException {
 		
 		config = aConfig;
@@ -59,6 +74,15 @@ public class Encryptor {
 		
 	}
 	
+	/**
+	 * Creates encrypted/decrypted output stream.
+	 * 
+	 * @param stream original stream
+	 * @param optmode javax.crypto.ENCRYPT_MODE or javax.crypto.DECRYPT_MODE
+	 * @return cipher stream
+	 * @throws InvalidKeyException
+	 * @throws InvalidAlgorithmParameterException 
+	 */
 	public CipherOutputStream getOutputStream(OutputStream stream, int optmode) throws InvalidKeyException, InvalidAlgorithmParameterException {
 		
 		cipher.init(optmode, key, iv);
@@ -66,6 +90,15 @@ public class Encryptor {
 		
 	}
 	
+	/**
+	 * Creates encrypted/decrypted input stream.
+	 * 
+	 * @param stream original stream
+	 * @param optmode javax.crypto.Cipher.ENCRYPT_MODE or javax.crypto.Cipher.DECRYPT_MODE
+	 * @return cipher stream
+	 * @throws InvalidKeyException
+	 * @throws InvalidAlgorithmParameterException
+	 */
 	public CipherInputStream getInputStream(InputStream stream, int optmode) throws InvalidKeyException, InvalidAlgorithmParameterException {
 		
 		cipher.init(optmode, key, iv);
@@ -73,6 +106,16 @@ public class Encryptor {
 		
 	}
 	
+	/**
+	 * Encrypt bytes.
+	 * 
+	 * @param input
+	 * @return encrypted bytes
+	 * @throws InvalidKeyException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws InvalidAlgorithmParameterException 
+	 */
 	public byte[] encrypt(byte[] input) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
 		
 		cipher.init(Cipher.ENCRYPT_MODE, key, iv);
@@ -80,6 +123,16 @@ public class Encryptor {
 
 	}
 	
+	/**
+	 * Decrypt bytes.
+	 * 
+	 * @param input
+	 * @return decrypted bytes
+	 * @throws InvalidKeyException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws InvalidAlgorithmParameterException
+	 */
 	public byte[] decrypt(byte[] input) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
 		
 		cipher.init(Cipher.DECRYPT_MODE, key, iv);
@@ -87,6 +140,9 @@ public class Encryptor {
 		
 	}
 	
+	/**
+	 * @return encryptor config (JCE compatible)
+	 */
 	public String getConfig() {
 		return config;
 	}

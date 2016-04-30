@@ -12,7 +12,8 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 /**
- *
+ * Represents individual download item and its options.
+ * 
  * @author Kamen
  */
 public class DownloadItem {
@@ -20,25 +21,32 @@ public class DownloadItem {
 	private final String encryption;
 	private String target;
 	
+	/**
+	 * @param file version of file to be downloaded
+	 * @param target local path where file will be downloaded
+	 */
 	public DownloadItem(FileVersion file, String target) {
 		this.version = file;
 		this.encryption = file.getFile().getEncryption();
 		this.target = target;
 	}
 	/**
-	 * @return the version
+	 * @return downloaded file
 	 */
 	public File getFile() {
 		return version.getFile();
 	}
 	
 	/**
-	 * @return 
+	 * @return downloaded version of file
 	 */
 	public FileVersion getVersion() {
 		return version;
 	}
 	
+	/**
+	 * @return file encryption used
+	 */
 	public String getEncryption() {
 		return this.encryption;
 	}
@@ -53,12 +61,16 @@ public class DownloadItem {
 		return new FileOutputStream(getTarget());
 	}
 	
+	/**
+	 * Sets path, where file will be downloaded.
+	 * @param target path where file will be downloaded
+	 */
 	public void setTarget(String target) {
 		this.target = target;
 	}
 	
 	/**
-	 * @return path to target version
+	 * @return path where file will be downloaded
 	 */
 	public String getTarget() {
 		return target;

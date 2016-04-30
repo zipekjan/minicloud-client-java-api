@@ -19,13 +19,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -137,53 +132,6 @@ public class External extends Eventor<Event> {
 	 */
 	public String getApiUrl() {
 		return getServer() + "/api.php";
-	}
-
-	private String md5(String what) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		return md5(what.getBytes("UTF-8"));
-	}
-	
-	private String md5(char[] what) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		return md5(toBytes(what));
-	}
-	
-	private byte[] toBytes(char[] chars) {
-		CharBuffer charBuffer = CharBuffer.wrap(Arrays.copyOf(chars, chars.length));
-		ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(charBuffer);
-		byte[] bytes = Arrays.copyOfRange(byteBuffer.array(),
-				byteBuffer.position(), byteBuffer.limit());
-		Arrays.fill(charBuffer.array(), '\u0000'); // clear sensitive data
-		Arrays.fill(byteBuffer.array(), (byte) 0); // clear sensitive data
-		return bytes;
-	}
-	
-	private String md5(byte[] what) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		return getHexString(MessageDigest.getInstance("MD5").digest(what));
-		
-	}
-
-	private String sha256(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		return sha256(input.getBytes("UTF-8"));
-	}
-	
-	private String sha256(char[] input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		return sha256(toBytes(input));
-	}
-	
-	private String sha256(byte[] input) throws NoSuchAlgorithmException {
-		return getHexString(MessageDigest.getInstance("SHA-256").digest(input));
-	}
-	
-	private String getHexString(byte[] bytes) {
-		StringBuilder result = new StringBuilder();
-		for (int i = 0; i < bytes.length; i++) {
-			if ((0xff & bytes[i]) < 0x10) {
-				result.append("0").append(Integer.toHexString((0xFF & bytes[i])));
-			} else {
-				result.append(Integer.toHexString(0xFF & bytes[i]));
-			}
-		}
-		return result.toString();
 	}
 
 	private Thread request(String params) {
@@ -402,40 +350,54 @@ public class External extends Eventor<Event> {
 		return action_id;
 	}
 	
+	/**
+	 * Returns list of all users on server. This method
+	 * is only usable by admins.
+	 * 
+	 * @return action id if request
+	 */
 	public String getUsers() {
-		return getUsers(false);
+		return getUsers(Long.toString(this.actionCounter++));
 	}
 	
-	public String getUsers(boolean wait) {
-		return getUsers(wait, Long.toString(this.actionCounter++));
-	}
-	
-	public String getUsers(boolean wait, String action_id) {
+	/**
+	 * Returns list of all users on server. This method
+	 * is only usable by admins.
+	 * 
+	 * @param action_id ID identify response to this request.
+	 * @return action id if request
+	 */
+	public String getUsers(String action_id) {
 		Map<String, String> params = new HashMap<>();
 		params.put("action_id", action_id);
 		
-		Thread request = request(createUrl("admin_get_users", params));
-
-		if (wait) {
-			try {
-				request.join();
-			} catch (InterruptedException ex) {
-				Logger.getLogger(External.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
+		request(createUrl("admin_get_users", params));
 		
 		return action_id;
 	}
 	
+	/**
+	 * Updates user values on server. This method can only
+	 * be used on logged user.
+	 * 
+	 * @param user user with updated values
+	 * @return action id to identify response
+	 * @throws NoSuchProviderException thown when user is unable to hash password
+	 */
 	public String setUser(User user) throws NoSuchProviderException {
-		return setUser(user, false);
+		return setUser(user, Long.toString(this.actionCounter++));
 	}
 	
-	public String setUser(User user, boolean wait) throws NoSuchProviderException {
-		return setUser(user, wait, Long.toString(this.actionCounter++));
-	}
-	
-	public String setUser(User user, boolean wait, String action_id) throws NoSuchProviderException {
+	/**
+	 * Updates user values on server. This method can only
+	 * be used on logged user.
+	 * 
+	 * @param user user with updated values
+	 * @param action_id ID to identify response to this request
+	 * @return action id to identify response
+	 * @throws NoSuchProviderException thown when user is unable to hash password
+	 */
+	public String setUser(User user, String action_id) throws NoSuchProviderException {
 		Map<String, String> params = new HashMap<>();
 		
 		params.putAll(user.getUpdate());
@@ -443,95 +405,96 @@ public class External extends Eventor<Event> {
 		params.put("action_id", action_id);
 		params.put("id", Integer.toString(user.getId()));
 		
-		Thread request = request(createUrl("set_user", params));
-
-		if (wait) {
-			try {
-				request.join();
-			} catch (InterruptedException ex) {
-				Logger.getLogger(External.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
+		request(createUrl("set_user", params));
 		
 		return action_id;
 	}
 	
+	/**
+	 * Creates new user on server. This method is only
+	 * available to admin.
+	 * 
+	 * @param user data of user to be created
+	 * @return action id to identify response
+	 */
 	public String createUser(User user) {
-		return createUser(user, false);
+		return createUser(user, Long.toString(this.actionCounter++));
 	}
 	
-	public String createUser(User user, boolean wait) {
-		return createUser(user, wait, Long.toString(this.actionCounter++));
-	}
-	
-	public String createUser(User user, boolean wait, String action_id) {
+	/**
+	 * Creates new user on server. This method is only
+	 * available to admin.
+	 * 
+	 * @param user data of user to be created
+	 * @param action_id ID to identify response to this request
+	 * @return action id to identify response
+	 */
+	public String createUser(User user, String action_id) {
 		Map<String, String> params = new HashMap<>();
 		params.put("action_id", action_id);
 		
 		params.putAll(user.getUpdate(true));
 		
-		Thread request = request(createUrl("admin_create_user", params));
+		request(createUrl("admin_create_user", params));
 
-		if (wait) {
-			try {
-				request.join();
-			} catch (InterruptedException ex) {
-				Logger.getLogger(External.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
-		
 		return action_id;
 	}
 	
+	/**
+	 * Updated user data on server. This method allows updating
+	 * any user, but is only available for admins.
+	 * 
+	 * @param user updated user data
+	 * @return action id to identify response
+	 */
 	public String adminSetUser(User user) {
-		return adminSetUser(user, false);
+		return adminSetUser(user, Long.toString(this.actionCounter++));
 	}
 	
-	public String adminSetUser(User user, boolean wait) {
-		return adminSetUser(user, wait, Long.toString(this.actionCounter++));
-	}
-	
-	public String adminSetUser(User user, boolean wait, String action_id) {
+	/**
+	 * Updated user data on server. This method allows updating
+	 * any user, but is only available for admins.
+	 * 
+	 * @param user updated user data
+	 * @param action_id ID to identify response to this request
+	 * @return action id to identify response
+	 */
+	public String adminSetUser(User user, String action_id) {
 		Map<String, String> params = new HashMap<>();
 		params.put("action_id", action_id);
 		
 		params.putAll(user.getUpdate(true));
 		
-		Thread request = request(createUrl("admin_set_user", params));
+		request(createUrl("admin_set_user", params));
 
-		if (wait) {
-			try {
-				request.join();
-			} catch (InterruptedException ex) {
-				Logger.getLogger(External.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
-		
 		return action_id;
 	}
 	
+	/**
+	 * Deletes user from server. This method is only avilable
+	 * to admin.
+	 * 
+	 * @param user user to be deleted
+	 * @return action id to identify response
+	 */
 	public String deleteUser(User user) {
-		return deleteUser(user, false);
+		return deleteUser(user, Long.toString(this.actionCounter++));
 	}
 	
-	public String deleteUser(User user, boolean wait) {
-		return deleteUser(user, wait, Long.toString(this.actionCounter++));
-	}
-	
-	public String deleteUser(User user, boolean wait, String action_id) {
+	/**
+	 * Deletes user from server. This method is only avilable
+	 * to admin.
+	 * 
+	 * @param user user to be deleted
+	 * @param action_id ID to identify response to this request
+	 * @return action id to identify response
+	 */
+	public String deleteUser(User user, String action_id) {
 		Map<String, String> params = new HashMap<>();
 		params.put("action_id", action_id);
 		params.put("id", Integer.toString(user.getId()));
 		
-		Thread request = request(createUrl("admin_delete_user", params));
-
-		if (wait) {
-			try {
-				request.join();
-			} catch (InterruptedException ex) {
-				Logger.getLogger(External.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
+		request(createUrl("admin_delete_user", params));
 		
 		return action_id;
 	}
@@ -890,7 +853,7 @@ public class External extends Eventor<Event> {
 	public void setAuth(String login, char[] password) {
 		
 		try {
-			setAuth(sha256(login + sha256(password)));
+			setAuth(Tools.sha256(login + Tools.sha256(password)));
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
 			Logger.getLogger(External.class.getName()).log(Level.SEVERE, null, ex);
 		}

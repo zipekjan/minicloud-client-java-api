@@ -31,28 +31,54 @@ public class Downloader extends Eventor<DownloadEvent> implements Listener {
 	
 	private final User user;
 	
+	/**
+	 * @param aExternal API used for downloading
+	 * @param aUser user that performs the downloading
+	 */
 	public Downloader(External aExternal, User aUser) {
 		items = new LinkedList<>();
 		external = aExternal;
 		user = aUser;
 	}
 	
+	/**
+	 * Adds new file to download list.
+	 * @param file
+	 */
 	public void add(FileVersion file) {
 		add(new DownloadItem(file, null));
 	}
 
+	/**
+	 * Adds new file to download list.
+	 * @param file
+	 * @param target
+	 */
 	public void add(FileVersion file, String target) {
 		add(new DownloadItem(file, target));
 	}
 	
+	/**
+	 * Adds new file to download list.
+	 * @param file
+	 * @param target
+	 */
 	public void add(FileVersion file, OutputStream target) {
 		add(new DownloadItemStream(file, target));
 	}
 	
+	/**
+	 * Adds new download item
+	 * @param item
+	 */
 	public void add(DownloadItem item) {
 		getItems().add(item);
 	}
 	
+	/**
+	 * Removes file from queue.
+	 * @param file 
+	 */
 	public void remove(File file) {
 		DownloadItem found = null;
 		for(DownloadItem item : getItems()) {
@@ -66,6 +92,10 @@ public class Downloader extends Eventor<DownloadEvent> implements Listener {
 		}
 	}
 
+	/**
+	 * Starts downloading.
+	 * @param target_folder default path that will be used, when no path is specified for item
+	 */
 	public void start(String target_folder) {
 		if (getItems().size() > 0 && thread == null) {
 			targetFolder = target_folder;
@@ -73,6 +103,9 @@ public class Downloader extends Eventor<DownloadEvent> implements Listener {
 		}
 	}
 
+	/**
+	 * Starts downloading new file in queue.
+	 */
 	private synchronized void nextFile() {
 		DownloadItem file = getItems().get(0);
 		getItems().remove(0);
@@ -104,6 +137,9 @@ public class Downloader extends Eventor<DownloadEvent> implements Listener {
 		fireEvent((DownloadEvent) event);
 	}
 
+	/**
+	 * Stops downloading. All running downloads will be stopped immidiately.
+	 */
 	public void stop() {
 		if (thread != null) {
 			thread.setStopDownload(true);
@@ -112,7 +148,7 @@ public class Downloader extends Eventor<DownloadEvent> implements Listener {
 	}
 
 	/**
-	 * @return the items
+	 * @return download queue
 	 */
 	public List<DownloadItem> getItems() {
 		return items;

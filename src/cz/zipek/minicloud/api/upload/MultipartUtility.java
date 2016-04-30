@@ -90,7 +90,11 @@ public class MultipartUtility extends Eventor<UploadEvent> {
         writer.flush();
     }
 	
-	
+	/**
+	 * Adds form field to request.
+	 * @param name field name
+	 * @param value field value
+	 */
 	public void addFormField(String name, int value) {
 		addFormField(name, Integer.toString(value));
 	}

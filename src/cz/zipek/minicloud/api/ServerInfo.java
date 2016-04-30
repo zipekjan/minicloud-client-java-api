@@ -16,8 +16,15 @@ public class ServerInfo {
 	private final String description;
 	private final String logo;
 	
-	private boolean niceUrl;
+	private final boolean niceUrl;
 	
+	/**
+	 * Should only be instanced from API.
+	 * 
+	 * @param from origin 
+	 * @param info raw data
+	 * @throws JSONException thrown when data are malformed 
+	 */
 	public ServerInfo(External from, JSONObject info) throws JSONException {
 		source = from;
 		name = info.optString("name", "");
@@ -27,7 +34,7 @@ public class ServerInfo {
 	}
 
 	/**
-	 * @return server name
+	 * @return name of server
 	 */
 	public String getName() {
 		return name;
@@ -41,7 +48,7 @@ public class ServerInfo {
 	}
 
 	/**
-	 * @return server logo url
+	 * @return url to server logo
 	 */
 	public String getLogo() {
 		return logo;
@@ -55,7 +62,7 @@ public class ServerInfo {
 	}
 
 	/**
-	 * @return the source
+	 * @return info origin
 	 */
 	public External getSource() {
 		return source;

@@ -38,6 +38,13 @@ public class File {
 	private FileVersion[] versions;
 	private FileVersion version;
 
+	/**
+	 * Creates new file representation. This class should only be instanced
+	 * by API.
+	 * 
+	 * @param source API origin of this file
+	 * @param data raw data of file
+	 */
 	public File(External source, JSONObject data) {
 		this.source = source;
 		

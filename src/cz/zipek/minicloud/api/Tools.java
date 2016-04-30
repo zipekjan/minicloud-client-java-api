@@ -26,7 +26,11 @@ import java.util.Arrays;
  */
 public class Tools {
 	
+	/**
+	 * List of available hash functions.
+	 */
 	public enum Hash {
+
 		MD5("MD5"),
 		SHA256("SHA-256"),
 		SHA512("SHA-512");
@@ -107,50 +111,142 @@ public class Tools {
 		return result.toString();
 	}
 	
+	/**
+	 * Makes MD5 hash of specified string.
+	 * 
+	 * @param what hash origin
+	 * @return hash of what
+	 * @throws NoSuchAlgorithmException
+	 * @throws UnsupportedEncodingException 
+	 */
 	public static String md5(String what) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		return md5(what.getBytes("UTF-8"));
 	}
 	
+	/**
+	 * Makes MD5 hash of specified string.
+	 * 
+	 * @param what hash origin
+	 * @return hash of what
+	 * @throws NoSuchAlgorithmException
+	 * @throws UnsupportedEncodingException 
+	 */
 	public static String md5(char[] what) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		return md5(toBytes(what));
 	}
 		
+	/**
+	 * Makes MD5 hash of specified string.
+	 * 
+	 * @param what hash origin
+	 * @return hash of what
+	 * @throws NoSuchAlgorithmException
+	 * @throws UnsupportedEncodingException 
+	 */
 	public static String md5(byte[] what) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		return getHexString(MessageDigest.getInstance("MD5").digest(what));
 	}
 	
+	/**
+	 * Makes sha256 hash of specified string.
+	 * 
+	 * @param input hash origin
+	 * @return sha256 hash of input
+	 * @throws NoSuchAlgorithmException
+	 * @throws UnsupportedEncodingException
+	 */
 	public static String sha256(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		return sha256(input.getBytes("UTF-8"));
 	}
 	
+	/**
+	 * Makes sha256 hash of specified string.
+	 * 
+	 * @param input hash origin
+	 * @return sha256 hash of input
+	 * @throws NoSuchAlgorithmException
+	 * @throws UnsupportedEncodingException
+	 */
 	public static String sha256(char[] input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		return sha256(toBytes(input));
 	}
 	
+	/**
+	 * Makes sha256 hash of specified string.
+	 * 
+	 * @param input hash origin
+	 * @return sha256 hash of input
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static String sha256(byte[] input) throws NoSuchAlgorithmException {
 		return getHexString(MessageDigest.getInstance("SHA-256").digest(input));
 	}
 	
+	/**
+	 * Makes sha256 hash of specified string.
+	 * 
+	 * @param input hash origin
+	 * @return bytes of sha256 of input
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static byte[] sha256Bytes(char[] input) throws NoSuchAlgorithmException {
 		return sha256Bytes(toBytes(input));
 	}
 	
+	/**
+	 * Makes sha256 hash of specified string.
+	 * 
+	 * @param input hash origin
+	 * @return bytes of sha256 of input
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static byte[] sha256Bytes(byte[] input) throws NoSuchAlgorithmException {
 		return MessageDigest.getInstance("SHA-256").digest(input);
 	}
 	
+	/**
+	 * Makes hash of specified string.
+	 * 
+	 * @param input hash origin
+	 * @param encoder hash type
+	 * @return hash of input
+	 * @throws NoSuchAlgorithmException
+	 * @throws java.io.UnsupportedEncodingException
+	 */
 	public static String hash(String input, Hash encoder) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		return hash(input.getBytes("UTF-8"), encoder);
 	}
 	
+	/**
+	 * Makes hash of specified string.
+	 * 
+	 * @param input hash origin
+	 * @param encoder hash type
+	 * @return hash of input
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static String hash(char[] input, Hash encoder) throws NoSuchAlgorithmException {
 		return hash(toBytes(input), encoder);
 	}
 	
+	/**
+	 * Makes hash of specified string.
+	 * 
+	 * @param input hash origin
+	 * @param encoder hash type
+	 * @return hash of input
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static String hash(byte[] input, Hash encoder) throws NoSuchAlgorithmException {
 		return getHexString(MessageDigest.getInstance(encoder.toString()).digest(input));
 	}
 	
+	/**
+	 * Converts char array to bytes.
+	 * 
+	 * @param chars
+	 * @return chars converted to bytes
+	 */
 	public static byte[] toBytes(char[] chars) {
 		CharBuffer charBuffer = CharBuffer.wrap(chars);
 		ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(charBuffer);
@@ -161,6 +257,12 @@ public class Tools {
 		return bytes;
 	}
 	
+	/**
+	 * Makes hex string of speicifed bytes.
+	 * 
+	 * @param bytes
+	 * @return hex string of bytes
+	 */
 	public static String getHexString(byte[] bytes) {
 		StringBuilder result = new StringBuilder();
 		for (int i = 0; i < bytes.length; i++) {

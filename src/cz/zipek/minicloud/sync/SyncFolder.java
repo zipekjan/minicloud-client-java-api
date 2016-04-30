@@ -120,6 +120,10 @@ public class SyncFolder extends Eventor<SyncEvent> implements Listener {
 		return lastSync;
 	}
 	
+	/**
+	 * Set API used for synchronization.
+	 * @param external
+	 */
 	public void setExternal(External external) {
 		
 		if (this.external != null)
@@ -130,10 +134,18 @@ public class SyncFolder extends Eventor<SyncEvent> implements Listener {
 		
 	}
 	
+	/**
+	 * Sets user used for synchronization.
+	 * @param user 
+	 */
 	public void setUser(User user) {
 		this.user = user;
 	}
 	
+	/**
+	 * Sets ecnryption options used for synchronization.
+	 * @param encryption
+	 */
 	public void setEncryption(String encryption) {
 		this.encryption = encryption;
 	}
@@ -145,6 +157,10 @@ public class SyncFolder extends Eventor<SyncEvent> implements Listener {
 		this.lastSync = lastSync;
 	}
 	
+	/**
+	 * Starts synchronization on background.
+	 * @return thread doing the synchronization
+	 */
 	public Thread syncAsync() {
 		Thread thread = new Thread() {
 			@Override
@@ -156,6 +172,9 @@ public class SyncFolder extends Eventor<SyncEvent> implements Listener {
 		return thread;
 	}
 	
+	/**
+	 * Starts synchronization.
+	 */
 	public void sync() {
 		if (syncing)
 			return;
@@ -178,6 +197,10 @@ public class SyncFolder extends Eventor<SyncEvent> implements Listener {
 		actionId = external.getPath(remote, true);
 	}
 
+	/**
+	 * Stops synchronization. All pending downloads and uploads
+	 * will be cancelled.
+	 */
 	public void stop() {
 		if (downloader != null) {
 			downloader.stop();

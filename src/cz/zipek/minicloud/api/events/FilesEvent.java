@@ -29,6 +29,9 @@ public class FilesEvent extends SuccessEvent {
 		}
 	}
 	
+	/**
+	 * @return list of files contained in event
+	 */
 	public File[] getFiles() {
 		return files;
 	}

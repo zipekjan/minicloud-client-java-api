@@ -1114,6 +1114,8 @@ public class Base64
      *
      * @param source The Base64 encoded data
      * @return decoded data
+	 * @throws java.io.IOException
+	 * @throws java.io.IOException
      * @since 2.3.1
      */
     public static byte[] decode( byte[] source )
@@ -1701,6 +1703,7 @@ public class Base64
          * to/from Base64 and returns the next byte.
          *
          * @return next byte
+		 * @throws java.io.IOException
          * @since 1.3
          */
         @Override
@@ -1810,6 +1813,7 @@ public class Base64
          * @param off offset for array
          * @param len max number of bytes to read into array
          * @return bytes read into array or -1 if end of stream is encountered.
+		 * @throws java.io.IOException
          * @since 1.3
          */
         @Override
@@ -1920,6 +1924,7 @@ public class Base64
          * at a time.
          *
          * @param theByte the byte to write
+		 * @throws java.io.IOException
          * @since 1.3
          */
         @Override
@@ -1975,6 +1980,7 @@ public class Base64
          * @param theBytes array from which to read bytes
          * @param off offset for array
          * @param len max number of bytes to read into array
+		 * @throws java.io.IOException
          * @since 1.3
          */
         @Override
@@ -2016,6 +2022,7 @@ public class Base64
         /** 
          * Flushes and closes (I think, in the superclass) the stream. 
          *
+		 * @throws java.io.IOException
          * @since 1.3
          */
         @Override

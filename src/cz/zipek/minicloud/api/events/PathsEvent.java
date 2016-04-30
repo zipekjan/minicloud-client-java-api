@@ -36,6 +36,9 @@ public class PathsEvent extends SuccessEvent {
 		}
 	}
 	
+	/**
+	 * @return list of paths contained in event
+	 */
 	public Path[] getPaths() {
 		return paths;
 	}

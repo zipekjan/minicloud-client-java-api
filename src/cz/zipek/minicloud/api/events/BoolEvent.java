@@ -22,6 +22,9 @@ public class BoolEvent extends SuccessEvent {
 		bool = data.optJSONObject("data").optBoolean("bool");
 	}
 	
+	/**
+	 * @return bool value of event
+	 */
 	public boolean getBool() {
 		return bool;
 	}

@@ -30,6 +30,14 @@ public class Path {
 	private final List<File> files = new ArrayList<>();
 	private final List<Path> paths = new ArrayList<>();
 	
+	/**
+	 * Creates new path representation. Should only be instanced
+	 * from API.
+	 * 
+	 * @param api origin
+	 * @param data raw path data
+	 * @throws JSONException thrown when raw data are malformed
+	 */
 	public Path(External api, JSONObject data) throws JSONException {
 		
 		source = api;
@@ -162,10 +170,22 @@ public class Path {
 		return paths;
 	}
 	
+	/**
+	 * Returns path relative to specified path.
+	 * 
+	 * @param relative_to path result will be relative to
+	 * @return path relative to argument
+	 */
 	public String getRelativePath(Path relative_to) {
 		return getRelativePath(relative_to.getPath());
 	}
 	
+	/**
+	 * Returns path relative to specified path.
+	 * 
+	 * @param relative_to path result will be relative to
+	 * @return path relative to argument
+	 */
 	public String getRelativePath(String relative_to) {
 		return path.substring(relative_to.length());
 	}

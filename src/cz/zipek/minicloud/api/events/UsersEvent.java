@@ -37,6 +37,9 @@ public class UsersEvent extends SuccessEvent {
 		}
 	}
 
+	/**
+	 * @return list of users contained in event
+	 */
 	public User[] getUsers() {
 		return users;
 	}
