@@ -853,7 +853,7 @@ public class External extends Eventor<Event> {
 	public void setAuth(String login, char[] password) {
 		
 		try {
-			setAuth(Tools.sha256(login + Tools.sha256(password)));
+			setAuth(login + ":" + Tools.sha256(password));
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
 			Logger.getLogger(External.class.getName()).log(Level.SEVERE, null, ex);
 		}
