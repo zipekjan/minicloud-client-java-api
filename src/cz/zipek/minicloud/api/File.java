@@ -162,7 +162,7 @@ public class File {
 	public String getPath() {
 		if (parent == null)
 			return "/" + getName();
-		return "/" + parent.getPath() + getName();
+		return "/" + parent.getPath() + "/" + getName();
 	}
 	
 	/**

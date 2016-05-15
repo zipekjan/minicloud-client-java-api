@@ -170,7 +170,7 @@ public class External extends Eventor<Event> {
 		
 		if (handler != null) {
 					
-			System.out.println("Event type " + handler.getName());
+			//System.out.println("Event type " + handler.getName());
 			
 			try {
 				fireEvent((Event)(
@@ -206,7 +206,7 @@ public class External extends Eventor<Event> {
 		conn.setRequestProperty("X-Auth", auth);
 		//conn.setRequestProperty("Content-Length", "" + Integer.toString(request.getBytes().length));
 
-		System.out.println(params);
+		//System.out.println(params);
 		
 		try (DataOutputStream out = new DataOutputStream(conn.getOutputStream())) {
 			out.writeBytes(params);
@@ -236,7 +236,7 @@ public class External extends Eventor<Event> {
 			}
 		}
 		
-		System.out.print(response);
+		//System.out.print(response);
 		
 		return new JSONObject(response);
 	}

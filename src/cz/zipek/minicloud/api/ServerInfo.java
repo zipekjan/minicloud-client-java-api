@@ -18,6 +18,9 @@ public class ServerInfo {
 	
 	private final boolean niceUrl;
 	
+	private final long time;
+	private final long offset;
+	
 	/**
 	 * Should only be instanced from API.
 	 * 
@@ -31,6 +34,8 @@ public class ServerInfo {
 		description = info.optString("description", "");
 		niceUrl = info.optBoolean("nice_url", false);
 		logo = info.optString("logo", null);
+		time = info.optLong("time", System.currentTimeMillis() / 1000L);
+		offset = System.currentTimeMillis() / 1000L - time;
 	}
 
 	/**
@@ -66,6 +71,20 @@ public class ServerInfo {
 	 */
 	public External getSource() {
 		return source;
+	}
+
+	/**
+	 * @return unix timestamp on server in time of request
+	 */
+	public long getTime() {
+		return time;
+	}
+
+	/**
+	 * @return time offset from this machine in seconds
+	 */
+	public long getOffset() {
+		return offset;
 	}
 	
 }

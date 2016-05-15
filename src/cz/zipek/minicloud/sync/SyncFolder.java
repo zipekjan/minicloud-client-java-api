@@ -134,6 +134,10 @@ public class SyncFolder extends Eventor<SyncEvent> implements Listener {
 		
 	}
 	
+	public void setTimeOffset(int offset) {
+		timeOffset = offset;
+	}
+	
 	/**
 	 * Sets user used for synchronization.
 	 * @param user 
@@ -268,9 +272,6 @@ public class SyncFolder extends Eventor<SyncEvent> implements Listener {
 					PathEvent pathEvent = (PathEvent)event;
 					Path folder = pathEvent.getPath();
 					
-					//@TODO: Implement
-					timeOffset = 0; //filesEvent.getOffset();
-					
 					downloader = new Downloader(external, user);
 					uploader = new Uploader(external, user.getEncryptor(encryption));
 					
@@ -322,6 +323,8 @@ public class SyncFolder extends Eventor<SyncEvent> implements Listener {
 								break;
 							}
 						}
+						
+						
 						if (!exists) {
 							String relative = file.getParentFile().getAbsolutePath().substring(local.getAbsolutePath().length()).replace(File.separator, "/");
 							
@@ -333,8 +336,7 @@ public class SyncFolder extends Eventor<SyncEvent> implements Listener {
 									path = path.substring(0, path.length() - 1);
 								while (path.length() > 0 && path.charAt(0) == '/')
 									path = path.substring(1);
-								
-								// @TODO: Allow user select default behaviour
+
 								uploader.add(file, path, false);
 							}
 						}
@@ -381,6 +383,7 @@ public class SyncFolder extends Eventor<SyncEvent> implements Listener {
 				fireEvent(new SyncMkdirFailedEvent(local.getParentFile().getAbsolutePath()));
 				return false;
 			}
+			
 			downloader.add(remote.getVersion(), local.getAbsolutePath());
 		} else {
 			//Check if file has changed

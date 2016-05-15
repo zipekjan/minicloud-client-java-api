@@ -130,7 +130,7 @@ public class Uploader extends Eventor<UploadEvent> implements Listener {
 			UploadThreadSentEvent e = (UploadThreadSentEvent)event;
 			UploadItem item = items.get(0);
 			
-			System.out.println(e.getResponse());
+			//System.out.println(e.getResponse());
 			
 			JSONObject data = null;
 			try {

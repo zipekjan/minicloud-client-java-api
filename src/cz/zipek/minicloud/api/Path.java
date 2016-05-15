@@ -75,7 +75,9 @@ public class Path {
 		JSONArray ch_paths = data.getJSONArray("paths");
 		
 		for(int i = 0, l = ch_files.length(); i < l; i++) {
-			files.add(new File(this.source, ch_files.getJSONObject(i)));
+			File file = new File(this.source, ch_files.getJSONObject(i));
+			file.setParent(this);
+			files.add(file);
 		}
 		
 		for(int i = 0, l = ch_paths.length(); i < l; i++) {

@@ -73,7 +73,7 @@ class DownloadThread extends Thread
 		try {
 			URL url = new URL(this.getSource().getDownloadLink(version));
 			
-			System.out.println("Downloading " + url);
+			//System.out.println("Downloading " + url);
 			
 			Encryptor encryptor = null;
 			if (encryption != null && encryption.length() > 0) {
@@ -103,9 +103,9 @@ class DownloadThread extends Thread
 						if (encryptor != null) {
 							cipherStream = encryptor.getOutputStream(new NotClosingOutputStream(outputStream), Cipher.DECRYPT_MODE);
 						
-							System.out.println("(Download) Encryption used: " + encryptor.getConfig());
+							//System.out.println("(Download) Encryption used: " + encryptor.getConfig());
 						} else {
-							System.out.println("(Download) No encryption");
+							//System.out.println("(Download) No encryption");
 						}
 
 						buffer = new byte[4096];

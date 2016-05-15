@@ -129,15 +129,15 @@ public class MultipartUtility extends Eventor<UploadEvent> {
 		int sentNow;
 		long sentTotal;
 
-		System.out.println("Upload file " + fileName);
+		//System.out.println("Upload file " + fileName);
 		
 		CipherOutputStream cipherStream = null;
 		if (encryptor != null) {
 			cipherStream = encryptor.getOutputStream(new NotClosingOutputStream(outputStream), Cipher.ENCRYPT_MODE);
 		
-			System.out.println("(Upload) Encryption used: " + encryptor.getConfig());
+			//System.out.println("(Upload) Encryption used: " + encryptor.getConfig());
 		} else {
-			System.out.println("(Upload) No encryption");
+			//System.out.println("(Upload) No encryption");
 		}
 
 		sentTotal = 0;
