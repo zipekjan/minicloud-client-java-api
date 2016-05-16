@@ -1,6 +1,30 @@
+/* 
+ * The MIT License
+ *
+ * Copyright 2016 Jan Zípek <jan at zipek.cz>.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 package cz.zipek.minicloud.api;
 
 import cz.zipek.minicloud.api.events.BoolEvent;
+import cz.zipek.minicloud.api.events.ConnectionErrorEvent;
 import cz.zipek.minicloud.api.events.ErrorEvent;
 import cz.zipek.minicloud.api.events.FileEvent;
 import cz.zipek.minicloud.api.events.FilesEvent;
@@ -32,7 +56,7 @@ import org.json.JSONObject;
 /**
  * This class manages interaction with minicloud server API
  * 
- * @author Kamen
+ * @author Jan Zípek <jan at zipek.cz>
  */
 public class External extends Eventor<Event> {
 
@@ -139,6 +163,8 @@ public class External extends Eventor<Event> {
 	}
 	
 	private Thread request(String params, String auth) {		
+		final External sender = this;
+		
 		Thread request = new ParamThread(params, auth) {
 			@Override
 			public void run() {
@@ -146,7 +172,7 @@ public class External extends Eventor<Event> {
 					JSONObject res = loadResponse(this.params, this.auth);
 					dispatchResponse(res);
 				} catch (JSONException | IOException excalibur) {
-					dispatchResponse(null);
+					fireEvent(new ConnectionErrorEvent(sender, null, null, excalibur));
 					Logger.getLogger(External.class.getName()).log(Level.SEVERE, null, excalibur);
 				}
 			}
@@ -158,7 +184,7 @@ public class External extends Eventor<Event> {
 	private void dispatchResponse(JSONObject response) {
 		
 		if (response == null) {
-			fireEvent(new ErrorEvent(this, null, null));
+			fireEvent(new ConnectionErrorEvent(this, null, null, new Exception("Empty response")));
 			return;
 		}
 		
@@ -212,6 +238,7 @@ public class External extends Eventor<Event> {
 			out.writeBytes(params);
 			out.flush();
 		} catch (Exception e) {
+			fireEvent(new ConnectionErrorEvent(this, null, null, e));
 			Logger.getLogger(External.class.getName()).log(Level.SEVERE, null, e);
 			return null;
 		}
@@ -231,6 +258,7 @@ public class External extends Eventor<Event> {
 					response += line + "\n";
 				}
 			} catch (Exception e2) {
+				fireEvent(new ConnectionErrorEvent(this, null, null, e2));
 				Logger.getLogger(External.class.getName()).log(Level.SEVERE, null, e2);
 				return null;
 			}

@@ -21,27 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package cz.zipek.minicloud.api.upload.events;
+package cz.zipek.minicloud.api.events;
 
-import cz.zipek.minicloud.api.upload.UploadEvent;
+import cz.zipek.minicloud.api.External;
 import org.json.JSONObject;
 
 /**
- *
+ * This event indicates error in connection to server.
+ * It could mean error in connection or error on server side.
+ * 
  * @author Jan Zípek <jan at zipek.cz>
  */
-public class UploadFailedEvent extends UploadEvent {
+public class ConnectionErrorEvent extends ErrorEvent {
+
+	private final Exception exception;
 	
-	private String response;
-	
-	public UploadFailedEvent(String response) {
-		this.response = response;
+	public ConnectionErrorEvent(External sender, JSONObject data, String action_id, Exception exception) {
+		super(sender, data, action_id);
+		
+		this.exception = exception;
 	}
-	
+
 	/**
-	 * @return the response
+	 * @return the exception
 	 */
-	public String getResponse() {
-		return response;
+	public Exception getException() {
+		return exception;
 	}
+	
 }
