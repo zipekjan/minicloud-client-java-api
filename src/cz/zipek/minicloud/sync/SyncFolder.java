@@ -145,10 +145,10 @@ public class SyncFolder extends Eventor<SyncEvent> implements Listener {
 	public void setExternal(External external) {
 		
 		if (this.external != null)
-			this.external.removeListener(this);
+			this.external.removeListenerLater(this);
 		
 		this.external = external;
-		this.external.addListener(this);
+		this.external.addListenerLater(this);
 		
 	}
 	
