@@ -38,7 +38,7 @@ import java.util.List;
 
 /**
  *
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class Downloader extends Eventor<DownloadEvent> implements Listener {
 

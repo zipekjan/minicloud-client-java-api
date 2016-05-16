@@ -27,7 +27,7 @@ import cz.zipek.minicloud.sync.SyncEvent;
 
 /**
  *
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class SyncChecksumFailedEvent extends SyncEvent {
 	private final String path;

@@ -45,7 +45,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 /**
  *
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class Encryptor {
 	

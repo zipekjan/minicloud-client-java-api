@@ -39,7 +39,7 @@ import java.util.Arrays;
 /**
  * Helper class with possibly usefull and widely used methods.
  * 
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class Tools {
 	

@@ -32,7 +32,7 @@ import java.io.OutputStream;
 /**
  * Represents individual download item and its options.
  * 
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class DownloadItem {
 	private final FileVersion version;

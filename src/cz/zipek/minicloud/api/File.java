@@ -37,7 +37,7 @@ import org.json.JSONObject;
 /**
  * Representation of file on minicloud server.
  * 
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class File {
 	private final External source;

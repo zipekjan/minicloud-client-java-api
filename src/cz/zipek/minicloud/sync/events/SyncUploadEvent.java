@@ -28,7 +28,7 @@ import cz.zipek.minicloud.sync.SyncEvent;
 
 /**
  *
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class SyncUploadEvent extends SyncEvent {
 	private final UploadEvent event;

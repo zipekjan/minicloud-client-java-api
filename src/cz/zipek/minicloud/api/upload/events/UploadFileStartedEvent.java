@@ -29,7 +29,7 @@ import java.io.File;
 
 /**
  *
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class UploadFileStartedEvent extends UploadEvent {
 	private final File file;

@@ -37,7 +37,7 @@ import javax.crypto.IllegalBlockSizeException;
 
 /**
  *
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class UploadThread extends Thread implements Listener {
 	protected final List<Listener> listeners = new ArrayList<>();

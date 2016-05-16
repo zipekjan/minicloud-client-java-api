@@ -30,7 +30,7 @@ import org.json.JSONObject;
  * This event indicates error in connection to server.
  * It could mean error in connection or error on server side.
  * 
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class ConnectionErrorEvent extends ErrorEvent {
 

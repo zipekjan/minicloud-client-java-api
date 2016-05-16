@@ -30,7 +30,7 @@ import org.json.JSONObject;
 
 /**
  *
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class FilesEvent extends SuccessEvent {
 

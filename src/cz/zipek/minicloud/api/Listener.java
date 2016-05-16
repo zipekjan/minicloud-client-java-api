@@ -26,7 +26,7 @@ package cz.zipek.minicloud.api;
 /**
  * Basic listener class listening for API events
  * 
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  * @param <E>
  */
 public interface Listener<E> {

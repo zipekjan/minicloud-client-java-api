@@ -28,7 +28,7 @@ import java.io.OutputStream;
 
 /**
  * This class is needed to correctly use Cipher streams
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class NotClosingOutputStream extends OutputStream {
 

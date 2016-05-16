@@ -35,7 +35,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class UploadItem {
 	private final java.io.File file;

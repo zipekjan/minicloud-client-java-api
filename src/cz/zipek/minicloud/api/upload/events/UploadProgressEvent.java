@@ -29,7 +29,7 @@ import java.io.File;
 
 /**
  *
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class UploadProgressEvent extends UploadEvent {
 	private final long total;

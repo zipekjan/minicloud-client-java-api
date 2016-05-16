@@ -56,7 +56,7 @@ import org.json.JSONObject;
 /**
  * This class manages interaction with minicloud server API
  * 
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class External extends Eventor<Event> {
 

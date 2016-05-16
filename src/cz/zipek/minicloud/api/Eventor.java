@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * Event emittor.
  * 
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  * @param <E> expected event class
  */
 public class Eventor<E> {

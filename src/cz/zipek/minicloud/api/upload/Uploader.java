@@ -45,7 +45,7 @@ import org.json.JSONObject;
 
 /**
  *
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class Uploader extends Eventor<UploadEvent> implements Listener {	
 	private final List<UploadItem> items = new ArrayList<>();

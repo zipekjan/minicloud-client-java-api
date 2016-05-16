@@ -47,7 +47,7 @@ import org.json.JSONObject;
 /**
  * Contains informations about logged user.
  * 
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class User {
 	

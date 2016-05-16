@@ -28,7 +28,7 @@ import org.json.JSONObject;
 /**
  * Base for all API event classes.
  * 
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class Event {
 

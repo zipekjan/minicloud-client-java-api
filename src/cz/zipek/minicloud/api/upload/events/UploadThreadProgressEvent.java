@@ -27,7 +27,7 @@ import cz.zipek.minicloud.api.upload.UploadEvent;
 
 /**
  *
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class UploadThreadProgressEvent extends UploadEvent {
 	private final long total;

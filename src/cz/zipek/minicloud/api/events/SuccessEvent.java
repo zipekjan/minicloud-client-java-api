@@ -28,7 +28,7 @@ import org.json.JSONObject;
 
 /**
  *
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class SuccessEvent extends cz.zipek.minicloud.api.Event {	
 	public SuccessEvent(External sender, JSONObject data, String action_id) {

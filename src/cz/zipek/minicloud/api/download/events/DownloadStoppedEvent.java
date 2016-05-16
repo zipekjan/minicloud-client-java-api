@@ -28,7 +28,7 @@ import cz.zipek.minicloud.api.download.DownloadEvent;
 
 /**
  *
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class DownloadStoppedEvent extends DownloadEvent {
 	private final File file;

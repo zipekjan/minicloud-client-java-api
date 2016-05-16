@@ -29,7 +29,7 @@ import java.io.OutputStream;
 /**
  * Allows downloading file to stream rather than directly to file.
  * 
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class DownloadItemStream extends DownloadItem {
 	

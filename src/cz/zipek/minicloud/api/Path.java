@@ -33,7 +33,7 @@ import org.json.JSONObject;
 /**
  * Representation of path (directory/folder) on minicloud server.
  * 
- * @author Jan Zípek <jan at zipek.cz>
+ * @author Jan Zípek
  */
 public class Path {
 	
