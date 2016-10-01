@@ -231,9 +231,9 @@ public class External extends Eventor<Event> {
 		conn.setRequestMethod("POST");
 		conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 		
+		// Only add auth when there is any
 		if (auth != null)
 			conn.setRequestProperty("X-Auth", auth);
-		//conn.setRequestProperty("Content-Length", "" + Integer.toString(request.getBytes().length));
 
 		try (DataOutputStream out = new DataOutputStream(conn.getOutputStream())) {
 			out.writeBytes(params);
