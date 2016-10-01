@@ -44,6 +44,11 @@ public class ServerInfo {
 	private final long time;
 	private final long offset;
 	
+	private final String salt;
+	
+	/// API version used on server
+	private final String version;
+	
 	/**
 	 * Should only be instanced from API.
 	 * 
@@ -59,6 +64,8 @@ public class ServerInfo {
 		logo = info.optString("logo", null);
 		time = info.optLong("time", System.currentTimeMillis() / 1000L);
 		offset = System.currentTimeMillis() / 1000L - time;
+		salt = info.optString("salt", null);
+		version = info.optString("version", null);
 	}
 
 	/**
@@ -108,6 +115,20 @@ public class ServerInfo {
 	 */
 	public long getOffset() {
 		return offset;
+	}
+
+	/**
+	 * @return salt that you're supposed to use for auth hash
+	 */
+	public String getSalt() {
+		return salt;
+	}
+
+	/**
+	 * @return server api version
+	 */
+	public String getVersion() {
+		return version;
 	}
 	
 }

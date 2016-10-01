@@ -139,6 +139,7 @@ public class User {
 	 * Unhashed user password needs to be saved in order to decrypt user key.
 	 * 
 	 * @param password unhashed password 
+	 * @param salt salt to be used for password
 	 * @param decrypt 
 	 * @throws java.security.NoSuchAlgorithmException 
 	 * @throws javax.crypto.NoSuchPaddingException 
@@ -149,8 +150,11 @@ public class User {
 	 * @throws java.io.UnsupportedEncodingException 
 	 * @throws java.security.NoSuchProviderException 
 	 */
-	public void setPassword(char[] password, boolean decrypt) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, UnsupportedEncodingException, NoSuchProviderException {
-		this.password = Arrays.copyOf(password, password.length);
+	public void setPassword(char[] password, char[] salt, boolean decrypt) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, UnsupportedEncodingException, NoSuchProviderException {
+		// Salt password
+		this.password = new char[password.length + salt.length];
+		System.arraycopy(salt, 0, this.password, 0, salt.length);
+		System.arraycopy(password, 0, this.password, salt.length, password.length);
 		
 		// Decrypt user key using password
 		if (key != null && decrypt) {

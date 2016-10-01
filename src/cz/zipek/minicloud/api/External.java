@@ -59,6 +59,8 @@ import org.json.JSONObject;
  * @author Jan Zípek
  */
 public class External extends Eventor<Event> {
+	///@var VERSION API version supported by this library
+	private final String version = "1.1";
 
 	/**
 	 * Codes used to determine response type.
@@ -117,7 +119,6 @@ public class External extends Eventor<Event> {
 		events.put(codes.USERS, UsersEvent.class);
 		events.put(codes.SERVER_INFO, ServerInfoEvent.class);
 		events.put(codes.BOOL, BoolEvent.class);
-		
 	}
 
 	/**
@@ -229,11 +230,11 @@ public class External extends Eventor<Event> {
 		conn.setDoOutput(true);
 		conn.setRequestMethod("POST");
 		conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-		conn.setRequestProperty("X-Auth", auth);
+		
+		if (auth != null)
+			conn.setRequestProperty("X-Auth", auth);
 		//conn.setRequestProperty("Content-Length", "" + Integer.toString(request.getBytes().length));
 
-		//System.out.println(params);
-		
 		try (DataOutputStream out = new DataOutputStream(conn.getOutputStream())) {
 			out.writeBytes(params);
 			out.flush();
@@ -877,11 +878,17 @@ public class External extends Eventor<Event> {
 	 * 
 	 * @param login
 	 * @param password 
+	 * @param salt
 	 */
-	public void setAuth(String login, char[] password) {
-		
+	public void setAuth(String login, char[] password, char[] salt) {
 		try {
-			setAuth(login + ":" + Tools.sha256(password));
+			// Salt password
+			char[] salted = new char[password.length + salt.length];
+			System.arraycopy(salt, 0, salted, 0, salt.length);
+			System.arraycopy(password, 0, salted, salt.length, password.length);
+			
+			// Build auth string from salted password
+			setAuth(login + ":" + Tools.sha256(salted));
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
 			Logger.getLogger(External.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -896,4 +903,14 @@ public class External extends Eventor<Event> {
 	public String getAuth() {
 		return auth;
 	}
+	
+	/**
+	 * Returns api version supported by this library.
+	 * 
+	 * @return supported api version
+	 */
+	public String getVersion() {
+		return version;
+	}
+	
 }
